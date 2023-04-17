@@ -1,0 +1,11 @@
+E:\PDR_test\PDR_test\bin\Debug\PDR_test.exe.config
+E:\PDR_test\PDR_test\bin\Debug\PDR_test.exe
+E:\PDR_test\PDR_test\bin\Debug\PDR_test.pdb
+E:\PDR_test\PDR_test\obj\Debug\PDR_test.csproj.AssemblyReference.cache
+E:\PDR_test\PDR_test\obj\Debug\PDR_test.csproj.SuggestedBindingRedirects.cache
+E:\PDR_test\PDR_test\obj\Debug\PDR_test.Form1.resources
+E:\PDR_test\PDR_test\obj\Debug\PDR_test.Properties.Resources.resources
+E:\PDR_test\PDR_test\obj\Debug\PDR_test.csproj.GenerateResource.cache
+E:\PDR_test\PDR_test\obj\Debug\PDR_test.csproj.CoreCompileInputs.cache
+E:\PDR_test\PDR_test\obj\Debug\PDR_test.exe
+E:\PDR_test\PDR_test\obj\Debug\PDR_test.pdb
