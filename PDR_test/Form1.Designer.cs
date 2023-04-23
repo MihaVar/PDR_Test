@@ -28,44 +28,68 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
+            this.pnlStart = new System.Windows.Forms.Panel();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.lblStart = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer = new System.Windows.Forms.TextBox();
+            this.pnlStart.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // pnlStart
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Impact", 24F);
-            this.label1.Location = new System.Drawing.Point(184, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(641, 39);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "ТЕСТУВАННЯ З ПРАВИЛ ДОРОЖНЬОГО РУХУ (ПДР)\r\n";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.pnlStart.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlStart.Controls.Add(this.btnStart);
+            this.pnlStart.Controls.Add(this.lblStart);
+            this.pnlStart.Location = new System.Drawing.Point(155, 50);
+            this.pnlStart.Name = "pnlStart";
+            this.pnlStart.Size = new System.Drawing.Size(698, 350);
+            this.pnlStart.TabIndex = 0;
             // 
-            // button1
+            // btnStart
             // 
-            this.button1.Font = new System.Drawing.Font("Book Antiqua", 15.75F);
-            this.button1.Location = new System.Drawing.Point(416, 280);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(177, 45);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Розпочати\r\n";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnStart.Location = new System.Drawing.Point(297, 264);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(104, 33);
+            this.btnStart.TabIndex = 1;
+            this.btnStart.Text = "Розпочати";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // lblStart
+            // 
+            this.lblStart.AutoSize = true;
+            this.lblStart.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblStart.Location = new System.Drawing.Point(108, 33);
+            this.lblStart.Name = "lblStart";
+            this.lblStart.Size = new System.Drawing.Size(480, 29);
+            this.lblStart.TabIndex = 0;
+            this.lblStart.Text = "ТЕСТУВАННЯ З ПРАВИЛ ДОРОЖНЬОГО РУХУ (ПДР)";
+            // 
+            // timer
+            // 
+            this.timer.Location = new System.Drawing.Point(29, 13);
+            this.timer.Name = "timer";
+            this.timer.Size = new System.Drawing.Size(135, 20);
+            this.timer.TabIndex = 1;
+            this.timer.Text = "00:00:00";
+            this.timer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.timer.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 481);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.timer);
+            this.Controls.Add(this.pnlStart);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.pnlStart.ResumeLayout(false);
+            this.pnlStart.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -73,8 +97,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel pnlStart;
+        private System.Windows.Forms.Label lblStart;
+        public System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox timer;
     }
 }
 
