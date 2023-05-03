@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PDR_test.Properties
+namespace WindowsFormsApp3.Properties
 {
 
 
