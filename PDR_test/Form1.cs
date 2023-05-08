@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp3
+namespace PDR_test
 {
     public partial class Form1 : Form
     {
@@ -50,8 +50,8 @@ namespace WindowsFormsApp3
         Timer tm = null;
         int startValue = 0;
 
-        int numericUpDownHour = 1;
-        int numericUpDownMin = 0;
+        int numericUpDownHour = 0;
+        int numericUpDownMin = 30;
         int numericUpDownSec = 0;
 
 //конвертація часу в текст
@@ -62,6 +62,7 @@ namespace WindowsFormsApp3
             int seconds = time - hours * 60 * 60 - minutes * 60;
             return String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
         }
+        
 
 //функція для роботи таймера 
         void timertick(object sender, EventArgs e)
@@ -131,6 +132,7 @@ namespace WindowsFormsApp3
             rdbtnAnswer_1.Checked = false;
             rdbtnAnswer_2.Checked = false;
             rdbtnAnswer_3.Checked = false;
+            //варіанти відповідей не об
        
             btnNext.Enabled = false; 
             //якщо відповідь не буде обрана, продовжити тест не можна
@@ -141,6 +143,38 @@ namespace WindowsFormsApp3
             if (Read.EndOfStream == true) btnNext.Text = "Завершити";
             //коли файл дійшов кінця, кнопка при натисканні завершить тест
 
+            switch(question_count)//вивід зображень для деяких питань
+            {
+                case 5:
+                    Image img_q5 = Image.FromFile(@"img\" + "q5.jpg");
+                    pctrbox_question.Image = img_q5;//програма шукає зображення по зазначеному шляху й змінює зображення
+                    break;
+                case 8:
+                    Image img_q8 = Image.FromFile(@"img\" + "q8.jpg");
+                    pctrbox_question.Image = img_q8;
+                    break;
+                case 11:
+                    Image img_q11 = Image.FromFile(@"img\" + "q11.jpg");
+                    pctrbox_question.Image = img_q11;
+                    break;
+                case 14:
+                    Image img_q14 = Image.FromFile(@"img\" + "q14.jpg");
+                    pctrbox_question.Image = img_q14;
+                    break;
+                case 17:
+                    Image img_q17 = Image.FromFile(@"img\" + "q17.jpg");
+                    pctrbox_question.Image = img_q17;
+                    break;
+                case 19:
+                    Image img_q19 = Image.FromFile(@"img\" + "q19.jpg");
+                    pctrbox_question.Image = img_q19;
+                    break;
+                default:
+                    pctrbox_question.Image = null;
+                    break;//якщо питання не передбачає зображення, в picturebox зображення немає
+            };
+
+            
         }
 
 //функція для перевірки radiobutton
@@ -165,6 +199,7 @@ namespace WindowsFormsApp3
 
             pnlTimer.Visible = false;
             pnlAnswers.Visible = false;
+            pctrbox_question.Visible = false;
             //таймер та варіанти відповідей ховаються
 
             if (results_shown == true)
@@ -173,9 +208,9 @@ namespace WindowsFormsApp3
                 btnStart.Visible = true;
             }//вивід кнопки початку тесту та зміна її функціоналу на перепроходження тесту
 
-            lblQuestion.Location = new Point(380, 63);//напис з текстом питання переноситься на центр
-            
+            lblQuestion.Location = new Point(440, 63);//напис з текстом питання переноситься на центр
 
+            
             if (correct_answers >= 18)
             {
                 lblQuestion.Text = String.Format("Тестування завершено.\n" +
@@ -189,10 +224,9 @@ namespace WindowsFormsApp3
                 lblQuestion.Text = String.Format("Тестування завершено.\n" +
                     "Правильних відповідей: " + correct_answers + " з 20.\n" +
                     "Набрані бали: " + grade + " %\n\n" +
-                    "Ви не склали тест.");
+                    "Ви не склали тест. ");
             }//вивід результатів тесту, зміна напису з текстом питання на результат
-            btnNext.Visible = false;
-            btnEnd.Visible = false;
+            pnlButtons.Visible = false;
             //кнопки з вибором наступного питання та достроковою здачею тесту ховаються
 
             var Str = "Список неправильних відповідей на питання " +
@@ -250,13 +284,14 @@ namespace WindowsFormsApp3
         private void btnStart_Click(object sender, EventArgs e)
         {
             DialogResult start_test;//задання початкового messagebox з інформацією про тест
-            start_test = MessageBox.Show("Тест складається з 20 питань з загальних положень правил дорожнього руху. У вас є година на те, щоб відповісти на всі питання.\n\nЩоб скласти тест, необхідно щонайменше 90 відсотків правильних відповідей.", "Початок", MessageBoxButtons.OK);
+            start_test = MessageBox.Show("Тест складається з 20 питань з загальних положень правил дорожнього руху. У вас є пів години на те, щоб відповісти на всі питання.\n\nПід варіантами відповідей будуть дві кнопки: ліва кнопка відповідає за перехід до наступного питання, а права дозволяє завершити тест достроково.\n\nЩоб скласти тест, необхідно щонайменше 90 відсотків правильних відповідей.", "Початок", MessageBoxButtons.OK);
             if (start_test == DialogResult.OK)
             {            
                 lblStart.Visible = false;
                 pnlTest.Visible = true;
                 pnlAnswers.Visible = true;
                 pnlTimer.Visible = true;
+                pnlButtons.Visible = true;
                 startValue = 60 * 60 * (int)numericUpDownHour + 60 * (int)numericUpDownMin + (int)numericUpDownSec;
                 tm.Start();
                 btnStart.Visible = false;
@@ -265,9 +300,8 @@ namespace WindowsFormsApp3
 
             if (btnStart.Text == "Почати спочатку")
             {
-                lblQuestion.Location = new Point(60, 26);
-                btnNext.Visible = true;
-                btnEnd.Visible = true;
+                lblQuestion.Location = new Point(30, 18);
+                pnlButtons.Visible = true;
                 btnNext.Text = "Наступне питання";
                 pnlAnswers.Visible = true;
                 btnEnd.Enabled = true;
