@@ -72,12 +72,7 @@ namespace PDR_test
                 timer.Text = Int2StringTime(startValue);
                 startValue--;
             } //таймер працює, поки startValue не дорівнює нулю
-            else if (results_shown == true)
-            {
-                (sender as Timer).Stop();
-                (sender as Timer).Dispose();
-            } //якщо тест був завершений, таймер зупиняється
-            else 
+            else if (results_shown == false)
             {
                 (sender as Timer).Stop();
                 (sender as Timer).Dispose();
@@ -86,8 +81,14 @@ namespace PDR_test
                 if (time_end == DialogResult.OK)
                 {
                     results();
-                } 
+                }
             } //якщо час було вичерпано користувачу виводить messagebox, а після нього результати
+            else if (results_shown == true)
+            {
+                (sender as Timer).Stop();
+                (sender as Timer).Dispose();
+            } //якщо тест був завершений, таймер зупиняється
+
 
         }
 
@@ -239,7 +240,9 @@ namespace PDR_test
            
             if (wrong_answers != 0) MessageBox.Show(Str, "Тестування завершено."); //вивід messagebox з питаннями, на які була дана неправильна відповідь
 
-            else if (wrong_answers == 0) MessageBox.Show("Ви не дали правильну відповідь на жодне з питань.", "Провалено"); //вивід messagebox у випадку якщо користувач не відповів правильно на жодне з питань
+            else if (wrong_answers == 0 && correct_answers != 20) MessageBox.Show("Ви не дали правильну відповідь на жодне з питань.", "Провалено"); //вивід messagebox у випадку якщо користувач не відповів правильно на жодне з питань
+
+            else if (correct_answers == 20) MessageBox.Show("Ви правильно відповіли на всі питання!", "Відмінний результат!");
 
             if (question_count == 1) MessageBox.Show("Ви не відповіли на жодне з питань.", "Провалено"); //вивід messagebox у випадку якщо користувач не пішов далі першого питання
 
@@ -272,7 +275,7 @@ namespace PDR_test
         private void Form1_Load(object sender, EventArgs e)
         {
             btnNext.Text = "Наступне питання";
-            btnEnd.Text = "Завершити тестування";
+            btnEnd.Text = "Завершити достроково";
             btnStart.Text = "Почати тестування";
 
             rdbtnAnswer_1.CheckedChanged += new EventHandler(checkstatus);
@@ -309,6 +312,7 @@ namespace PDR_test
                 grade = 0;
                 correct_answers = 0;
                 wrong_answers = 0;
+                results_shown = false;
             }//повторний вивід тесту, обнулення оцінки, правильних та правильних відповідей
 
         }
