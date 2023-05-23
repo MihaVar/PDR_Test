@@ -301,6 +301,7 @@ namespace PDR_test
             if (btnStart.Text == "Почати спочатку")
             {
                 lblQuestion.Location = new Point(30, 18);
+                pctrbox_question.Visible = true;
                 pnlButtons.Visible = true;
                 btnNext.Text = "Наступне питання";
                 pnlAnswers.Visible = true;
