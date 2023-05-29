@@ -14,30 +14,30 @@ namespace PDR_test
 {
     public partial class Form1 : Form
     {
-//ініціалізація змінних
+//creating variables
 
         int question_count;
         int correct_answers;
         int wrong_answers;
-//змінні з кількістю питань, правильними та неправильними відповідями
+//vars for questiong count, correct and wrong answers
 
         string[] array;
-//змінна з кількістю питань
+//array with questions amount
 
         int correct_answers_number;
         int selected_response;
-//змінні для роботи з radiobutton
+//vars for radiobutton
 
-        private bool results_shown = false;
-//змінна для визначення чи тест завершено
+        bool results_shown = false;
+//bools for showing if test ended
 
         int grade = 0;
-//змінна з оцінкою
+//var with grade
 
         System.IO.StreamReader Read;
-//змінна для зчитування питань
+//var for reading questions
 
-//запуск форми, ініціалізація таймера
+//initialization of form and timer
         public Form1()
         {
             InitializeComponent();
@@ -46,15 +46,15 @@ namespace PDR_test
             tm.Interval = 1000;
         }
         
-//змінні для таймера
+//vars for timer
         Timer tm = null;
         int startValue = 0;
 
         int numericUpDownHour = 0;
-        int numericUpDownMin = 30;
+        int numericUpDownMin = 20;
         int numericUpDownSec = 0;
 
-//конвертація часу в текст
+//convert time to text
         private string Int2StringTime(int time)
         {
             int hours = (time - (time % (60 * 60))) / (60 * 60);
@@ -64,14 +64,14 @@ namespace PDR_test
         }
         
 
-//функція для роботи таймера 
+//function for timer
         void timertick(object sender, EventArgs e)
         {
             if (startValue != 0)
             {
                 timer.Text = Int2StringTime(startValue);
                 startValue--;
-            } //таймер працює, поки startValue не дорівнює нулю
+            } //timer works while startValue isn't zero
             else if (results_shown == false)
             {
                 (sender as Timer).Stop();
@@ -82,43 +82,43 @@ namespace PDR_test
                 {
                     results();
                 }
-            } //якщо час було вичерпано користувачу виводить messagebox, а після нього результати
+            } //if time has ended, user get message and results
             else if (results_shown == true)
             {
                 (sender as Timer).Stop();
                 (sender as Timer).Dispose();
-            } //якщо тест був завершений, таймер зупиняється
+            } //if test has ended timer stops
 
 
         }
 
-//запуск тесту
+//start of test
         void start()
         {
-            var Encoding = System.Text.Encoding.GetEncoding(65001); //вивід кириличних символів
+            var Encoding = System.Text.Encoding.GetEncoding(65001); //encoding for cyrillic symbols
             try
             {
                 Read = new System.IO.StreamReader(System.IO.Directory.GetCurrentDirectory() + @"\questions.txt", Encoding);
                 this.Text = Read.ReadLine();
-                //програма зчитує текст, потрібний для тесту, з текстового файлу, розташованого в одній директорії з виконавчим файлом
+                //app reads text from text file, placed in same directory with executable file
 
                 question_count = 0;
                 correct_answers = 0;
                 wrong_answers = 0;
-                //виставлення значення змінних
+                //set values of variables
 
                 array = new String[21]; 
-                //розмір тесту (питання)
+                //size of test (questions)
             }
             catch (Exception)
             {  
                 MessageBox.Show("Помилка в зчитуванні файлу!");
-            } //виключення, якщо з файлом будуть проблеми
+            } //exception in cause of troubles with text file
             question();
 
         }
 
-//функція для питань
+//function for questions
         void question()
         {
             lblQuestion.Text = Read.ReadLine();
@@ -128,27 +128,27 @@ namespace PDR_test
             rdbtnAnswer_3.Text = Read.ReadLine();
           
             correct_answers_number = int.Parse(Read.ReadLine());
-            //зчитування тексту питання, варіантів відповідей та правильної відповіді з файлу
+            //read of question text, answers and right answer
 
             rdbtnAnswer_1.Checked = false;
             rdbtnAnswer_2.Checked = false;
             rdbtnAnswer_3.Checked = false;
-            //варіанти відповідей не об
+            //answer isn't selected by default
        
             btnNext.Enabled = false; 
-            //якщо відповідь не буде обрана, продовжити тест не можна
+            //if answer isn't picked user can't go further
 
             question_count += 1;
-            //з кожним питанням змінна збільшується
+            //var gets bigger with every question
           
             if (Read.EndOfStream == true) btnNext.Text = "Завершити";
-            //коли файл дійшов кінця, кнопка при натисканні завершить тест
+            //when text file comes to end user can finish test
 
-            switch(question_count)//вивід зображень для деяких питань
+            switch(question_count)//images for some questions
             {
                 case 5:
                     Image img_q5 = Image.FromFile(@"img\" + "q5.jpg");
-                    pctrbox_question.Image = img_q5;//програма шукає зображення по зазначеному шляху й змінює зображення
+                    pctrbox_question.Image = img_q5;//app search for right image by path and uses it when needed to
                     break;
                 case 8:
                     Image img_q8 = Image.FromFile(@"img\" + "q8.jpg");
@@ -172,44 +172,44 @@ namespace PDR_test
                     break;
                 default:
                     pctrbox_question.Image = null;
-                    break;//якщо питання не передбачає зображення, в picturebox зображення немає
+                    break;//if question doesn't have image picturebox is empty
             };
 
             
         }
 
-//функція для перевірки radiobutton
+//function for radiobutton check
         void checkstatus(object sender, EventArgs e)
         {
-            btnNext.Enabled = true; //якщо варіант відповіді обраний, кнопка "далі" доступна для натискання
+            btnNext.Enabled = true; //if answer is picked, user can continue test
             RadioButton toggle = (RadioButton)sender;
             var tmp = toggle.Name;
-            //перевірка роботи radiobutton
+            //radiobutton check
 
             selected_response = int.Parse(tmp.Substring(12));
-            //зчитування правильної відповіді
+            //reading of right answer
         }
 
-//функція, що виводить результати
+//function for results
         void results()
         {
 
-            grade += (correct_answers * 5); //підрахунок файлів
-            Read.Close(); //зчитування закінчується
-            results_shown = true; //визначає що тест завершено
+            grade += (correct_answers * 5); //grade count
+            Read.Close(); //reading ends
+            results_shown = true; //bool states that test has ended
 
             pnlTimer.Visible = false;
             pnlAnswers.Visible = false;
             pctrbox_question.Visible = false;
-            //таймер та варіанти відповідей ховаються
+            //timer and main test section is hidden
 
             if (results_shown == true)
             {
                 btnStart.Text = "Почати спочатку";
                 btnStart.Visible = true;
-            }//вивід кнопки початку тесту та зміна її функціоналу на перепроходження тесту
+            }//user can restart test with start button 
 
-            lblQuestion.Location = new Point(440, 63);//напис з текстом питання переноситься на центр
+            lblQuestion.Location = new Point(440, 63);//question text label gets to center
 
             
             if (correct_answers >= 18)
@@ -218,7 +218,7 @@ namespace PDR_test
                         "Правильних відповідей: " + correct_answers + " з 20.\n" +
                         "Набрані бали: " + grade + " %.\n\n" +
                         "Вітаємо! Ви склали тест!");
-            }//вивід результатів тесту при успішному складанні, зміна напису з текстом питання на результат
+            }//text in case of passing test
 
             else
             {
@@ -226,9 +226,9 @@ namespace PDR_test
                     "Правильних відповідей: " + correct_answers + " з 20.\n" +
                     "Набрані бали: " + grade + " %\n\n" +
                     "Ви не склали тест. ");
-            }//вивід результатів тесту, зміна напису з текстом питання на результат
+            }//text in case of simple end of test
             pnlButtons.Visible = false;
-            //кнопки з вибором наступного питання та достроковою здачею тесту ховаються
+            //buttons for test are hidden
 
             var Str = "Список неправильних відповідей на питання " +
                       ":\n\n";
@@ -236,40 +236,40 @@ namespace PDR_test
             {
                 Str = Str + array[i] + "\n";
             }
-            //запис питань, на які була дана неправильна відповідь
-           
-            if (wrong_answers != 0) MessageBox.Show(Str, "Тестування завершено."); //вивід messagebox з питаннями, на які була дана неправильна відповідь
+            //record of question, which were answered incorrect
 
-            else if (wrong_answers == 0 && correct_answers != 20) MessageBox.Show("Ви не дали правильну відповідь на жодне з питань.", "Провалено"); //вивід messagebox у випадку якщо користувач не відповів правильно на жодне з питань
+            if (wrong_answers == 20) MessageBox.Show("Ви не дали правильну відповідь на жодне з питань.", "Провалено"); //calling messagebox in case of zero correct answers
 
-            else if (correct_answers == 20) MessageBox.Show("Ви правильно відповіли на всі питання!", "Відмінний результат!");
+            else if (wrong_answers != 0 && wrong_answers != 20) MessageBox.Show(Str, "Тестування завершено."); //calling messagebox with incorrectly answered questions
 
-            if (question_count == 1) MessageBox.Show("Ви не відповіли на жодне з питань.", "Провалено"); //вивід messagebox у випадку якщо користувач не пішов далі першого питання
+            else if (correct_answers == 20) MessageBox.Show("Ви правильно відповіли на всі питання!", "Відмінний результат!"); //calling messagebox in case of zero wrong answers
+
+            if (question_count == 1) MessageBox.Show("Ви не відповіли на жодне з питань.", "Провалено"); //calling messagebox in case of ending test prematurely
 
 
         }
 
-//кнопка з переходом до наступного питання
+//button to get next question
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (selected_response == correct_answers_number) correct_answers = correct_answers + 1;//збільшення кількості балів у разі правильної відповіді на питання
+            if (selected_response == correct_answers_number) correct_answers = correct_answers + 1;//grade getting bigger in case of correct answer
 
             if (selected_response != correct_answers_number)
             {
                 wrong_answers = wrong_answers + 1;
                 
                 array[wrong_answers] = lblQuestion.Text;
-            }//у випадку неправильної відповіді на питання кількість неправильних відповідей збільшується і записується у список неправильних відповідей
-            if (btnNext.Text == "Завершити") results();//у разі надання відповідей на всі питання при натисканні кнопки виводяться результати 
-            if (btnNext.Text == "Наступне питання") question();//якщо користувач відповів не на всі питання, йому виводить наступне
+            }//in case of answering incorrectly amount of wrong answers gets bigger and recorded in array
+            if (btnNext.Text == "Завершити") results();//in case of answering last question user can end the test
+            if (btnNext.Text == "Наступне питання") question();//user gets to next question
 
         }
 
-//кнопка дострокового завершення тесту
+//button to end the test prematurely
         private void btnEnd_Click(object sender, EventArgs e)
         {
             results();
-        }//при натисканні користувачу виводить результати
+        }//user gets results
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -281,13 +281,13 @@ namespace PDR_test
             rdbtnAnswer_1.CheckedChanged += new EventHandler(checkstatus);
             rdbtnAnswer_2.CheckedChanged += new EventHandler(checkstatus);
             rdbtnAnswer_3.CheckedChanged += new EventHandler(checkstatus);
-        }//при загрузці форми текст на кнопках змінюється, а варіанти відповідей підв'язуються до функції з їхньою перевіркою
+        }//when form loads buttons get their text and radiobuttons tied with their check buttons
 
-//кнопка для початку тестування
+//button to start test
         private void btnStart_Click(object sender, EventArgs e)
         {
-            DialogResult start_test;//задання початкового messagebox з інформацією про тест
-            start_test = MessageBox.Show("Тест складається з 20 питань з загальних положень правил дорожнього руху. У вас є пів години на те, щоб відповісти на всі питання.\n\nПід варіантами відповідей будуть дві кнопки: ліва кнопка відповідає за перехід до наступного питання, а права дозволяє завершити тест достроково.\n\nЩоб скласти тест, необхідно щонайменше 90 відсотків правильних відповідей.", "Початок", MessageBoxButtons.OK);
+            DialogResult start_test;//messagebox with test info
+            start_test = MessageBox.Show("Тест складається з 20 питань з загальних положень правил дорожнього руху. У вас є двадцять хвилин на те, щоб відповісти на всі питання.\n\nПід варіантами відповідей будуть дві кнопки: ліва кнопка відповідає за перехід до наступного питання, а права дозволяє завершити тест достроково.\n\nЩоб скласти тест, необхідно щонайменше 90 відсотків правильних відповідей.", "Початок", MessageBoxButtons.OK);
             if (start_test == DialogResult.OK)
             {            
                 lblStart.Visible = false;
@@ -299,7 +299,7 @@ namespace PDR_test
                 tm.Start();
                 btnStart.Visible = false;
                 start();
-            }//вивід тесту, вивід та запуск таймера
+            }//test and timer starts
 
             if (btnStart.Text == "Почати спочатку")
             {
@@ -313,14 +313,14 @@ namespace PDR_test
                 correct_answers = 0;
                 wrong_answers = 0;
                 results_shown = false;
-            }//повторний вивід тесту, обнулення оцінки, правильних та правильних відповідей
+            }//start the test again
 
         }
 
-//кнопка виходу з додатку
+//button to exit app
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
-        }//після натискання додаток закривається
+        }//app closed after pressing button
     }
 }
